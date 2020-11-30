@@ -53,15 +53,10 @@ public class BattleshipGame {
 
                     //check if ship is too close to another
                     for (int i = minNum; i <= maxNum; i++) {
-                        try {
-                            if ("O".contains(field.getField()[getLetter1Int + 1][i]) || "O".contains(field.getField()[getLetter1Int - 1][i])
-                                    || "O".contains(field.getField()[getLetter1Int][i + 1]) || "O".contains(field.getField()[getLetter1Int][i - 1]) || "O".contains(field.getField()[getLetter1Int][i])) {
-                                System.out.println("\nError! You placed it too close to another one. Try again:");
-                                tooClose = true;
-                                break;
-                            }
-                        } catch (ArrayIndexOutOfBoundsException ignored) {
-                            System.out.println("fuck this 1");
+                        if (field.isThereShipForAllSides(getLetter1Int, i)) {
+                            System.out.println("\nError! You placed it too close to another one. Try again:");
+                            tooClose = true;
+                            break;
                         }
                     }
 
@@ -88,16 +83,11 @@ public class BattleshipGame {
 
                     //check if ship is too close to one another vertically
                     for (int i = minLetterInt; i <= maxLetterInt; i++) {
-                        try {
-                            if ("O".contains(field.getField()[i][getNum1 + 1]) || "O".contains(field.getField()[i][getNum1 - 1])
-                                    || "O".contains(field.getField()[i + 1][getNum1]) || "O".contains(field.getField()[i - 1][getNum1]) || "O".contains(field.getField()[i][getNum1])) {
+                            if (field.isThereShipForAllSides(i, getNum1)) {
                                 System.out.println("\nError! You placed it too close to another one. Try again:");
                                 tooClose = true;
                                 break;
                             }
-                        } catch (ArrayIndexOutOfBoundsException ignored) {
-                            System.out.println("fuck this 2");
-                        }
                     }
 
                     if (tooClose) {

@@ -27,6 +27,36 @@ public class Field {
         return field;
     }
 
+    public boolean isThereShip(int y, int x) {
+        return "O".contains(getField()[y][x]);
+    }
+
+    public boolean isThereShipForAllSides(int y, int x) {
+        if (y == 0) {
+            switch (x) {
+                case 0:
+                    return isThereShip(y, x) || isThereShip(y + 1, x) || isThereShip(y, x + 1);
+                case 9:
+                    return isThereShip(y, x) || isThereShip(y + 1, x) || isThereShip(y, x - 1);
+            }
+            return isThereShip(y, x) || isThereShip(y + 1, x) || isThereShip(y, x - 1) || isThereShip(y, x + 1);
+        }else if (y == 9) {
+            switch (x) {
+                case 0:
+                    return isThereShip(y, x) || isThereShip(y, x + 1) || isThereShip(y - 1, x);
+                case 9:
+                    return isThereShip(y, x) || isThereShip(y, x - 1) || isThereShip(y - 1, x);
+            }
+            return isThereShip(y, x) || isThereShip(y - 1, x) || isThereShip(y, x - 1) || isThereShip(y, x + 1);
+        }else if (x == 0) {
+            return isThereShip(y + 1, x) || isThereShip(y - 1, x) || isThereShip(y, x) || isThereShip(y, x + 1);
+        }else if (x == 9) {
+            return isThereShip(y + 1, x) || isThereShip(y - 1, x) || isThereShip(y, x) || isThereShip(y, x - 1);
+        }else {
+            return isThereShip(y + 1, x) || isThereShip(y - 1, x) || isThereShip(y, x + 1) || isThereShip(y, x - 1);
+        }
+    }
+
     public HashMap<Character, Integer> getLetterBind() {
         return letterBind;
     }
@@ -42,7 +72,6 @@ public class Field {
             }
             stringBuilder.append("\n");
         }
-
         System.out.println(stringBuilder);
     }
 }
