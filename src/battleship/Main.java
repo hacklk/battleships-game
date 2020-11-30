@@ -1,5 +1,6 @@
 package battleship;
 
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -49,7 +50,7 @@ public class Main {
                 } else if (ship3CellSwitch == 1) {
                     System.out.println("Enter the coordinates of the " + nameBind.get(shipLength + 30) + " (3 cells): ");
                     ship3CellSwitch++;
-                } else if (ship3CellSwitch == 2){
+                } else if (ship3CellSwitch == 2) {
                     shipLength--;
                     continue;
                 }
@@ -62,11 +63,18 @@ public class Main {
                 System.out.println();
                 System.out.print("> ");
                 String[] input = scanner.nextLine().trim().split(" ");
-                int getLetter1Int = letterBind.get(input[0].replaceAll("\\s+", "").charAt(0)) - 1;
-                int getLetter2Int = letterBind.get(input[1].replaceAll("\\s+", "").charAt(0)) - 1;
+                int getLetter1Int, getLetter2Int, getNum1, getNum2;
 
-                int getNum1 = Integer.parseInt(input[0].substring(1)) - 1;
-                int getNum2 = Integer.parseInt(input[1].substring(1)) - 1;
+                try {
+                    getLetter1Int = letterBind.get(input[0].replaceAll("\\s+", "").charAt(0)) - 1;
+                    getLetter2Int = letterBind.get(input[1].replaceAll("\\s+", "").charAt(0)) - 1;
+
+                    getNum1 = Integer.parseInt(input[0].substring(1)) - 1;
+                    getNum2 = Integer.parseInt(input[1].substring(1)) - 1;
+                } catch (Exception e) {
+                    System.out.println("\nError");
+                    continue;
+                }
 
                 int getLength = 0;
 
@@ -96,16 +104,25 @@ public class Main {
                                 tooClose = true;
                                 break;
                             }
-                        }catch (ArrayIndexOutOfBoundsException ignored) {}
+                        } catch (ArrayIndexOutOfBoundsException ignored) {
+                        }
                     }
 
-                    if (tooClose) { continue; }
-
-                    for (int i = minNum; i <= maxNum; i++) {
-                        field[getLetter1Int][i] = "O";
+                    if (tooClose) {
+                        continue;
                     }
+
+                    try {
+                        for (int i = minNum; i <= maxNum; i++) {
+                            field[getLetter1Int][i] = "O";
+                        }
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println("\nError");
+                        continue;
+                    }
+
                     break;
-                }else if (getNum1 == getNum2) {         //inserting ships vertically
+                } else if (getNum1 == getNum2) {         //inserting ships vertically
                     getLength = maxLetterInt - minLetterInt + 1;
                     if (shipLength == 3 && ship3CellSwitch == 2 && getLength != shipLength) {
                         System.out.println("\nError! Wrong length of the " + nameBind.get(33) + "! Try again:");
@@ -124,17 +141,27 @@ public class Main {
                                 tooClose = true;
                                 break;
                             }
-                        }catch (ArrayIndexOutOfBoundsException ignored) {}
+                        } catch (ArrayIndexOutOfBoundsException ignored) {
+                        }
                     }
 
-                    if (tooClose) { continue; }
-
-                    for (int i = minLetterInt; i <= maxLetterInt; i++) {
-                        field[i][getNum1] = "O";
+                    if (tooClose) {
+                        continue;
                     }
+
+                    try {
+                        for (int i = minLetterInt; i <= maxLetterInt; i++) {
+                            field[i][getNum1] = "O";
+                        }
+                    }catch (Exception e) {
+                        System.out.println("\nError");
+                        continue;
+                    }
+
                     break;
-
-                }else { System.out.println("\nError! Wrong ship location! Try again:"); }
+                } else {
+                    System.out.println("\nError! Wrong ship location! Try again:");
+                }
 
             }
 
