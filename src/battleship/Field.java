@@ -18,8 +18,8 @@ public class Field {
         }
 
         this.letterBind = new HashMap<>();
-        for (int i = 0; i < 10; i++) {
-            this.letterBind.put(letters, i + 1);
+        for (int i = 1; i <= 10; i++) {
+            this.letterBind.put(letters, i);
             letters++;
         }
     }

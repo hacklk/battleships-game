@@ -1,5 +1,6 @@
 package battleship;
 
+import java.text.ParseException;
 import java.util.Scanner;
 
 public class BattleshipGame {
@@ -111,6 +112,47 @@ public class BattleshipGame {
             }
             System.out.println();
             field.printField();
+        }
+
+        System.out.println("The game starts!\n");
+        field.printField();
+        System.out.println("Take a shot!");
+        System.out.println();
+
+        while (true) {
+            int letterInt = 0;
+            int num = 0;
+
+            System.out.print("> ");
+            String shotInput = scanner.nextLine().toUpperCase();
+
+            try {
+                if (field.getLetterBind().get(shotInput.charAt(0)) != null) {
+                    letterInt = field.getLetterBind().get(shotInput.charAt(0)) - 1;
+                }else {
+                    continue;
+                }
+                num = Integer.parseInt(shotInput.substring(1)) - 1;
+            } catch (NumberFormatException e) {
+                System.out.println("\nError\n");
+                continue;
+            }
+
+            try {
+                if (field.isThereShip(letterInt, num)) {
+                    System.out.println("\nYou hit a ship!\n");
+                    field.getField()[letterInt][num] = "X";
+                } else {
+                    System.out.println("\nYou missed!\n");
+                    field.getField()[letterInt][num] = "M";
+                }
+            }catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("\nError! You entered the wrong coordinates! Try again:\n");
+                continue;
+            }
+
+            field.printField();
+            break;
         }
     }
 }
