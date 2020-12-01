@@ -32,6 +32,14 @@ public class Field {
         return "O".contains(getField()[y][x]);
     }
 
+    public boolean isThereHit(int y, int x) {
+        return "X".contains(getField()[y][x]);
+    }
+
+    public boolean isThereMiss(int y, int x) {
+        return "M".contains(getField()[y][x]);
+    }
+
     public boolean isThereShipForAllSides(int y, int x) {
         if (y == 0) {
             switch (x) {
@@ -77,4 +85,5 @@ public class Field {
         }
         System.out.println(stringBuilder);
     }
+
 }
