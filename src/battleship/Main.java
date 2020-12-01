@@ -10,5 +10,6 @@ public class Main {
         Field field = new Field();
         BattleshipGame battleshipGame = new BattleshipGame(field, scanner);
         battleshipGame.play();
+
     }
 }

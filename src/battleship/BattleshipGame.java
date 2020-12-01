@@ -26,8 +26,8 @@ public class BattleshipGame {
                 int getLetter1Int, getLetter2Int, getNum1, getNum2;
 
                 try {
-                    getLetter1Int = field.getLetterBind().get(input[0].replaceAll("\\s+", "").charAt(0)) - 1;
-                    getLetter2Int = field.getLetterBind().get(input[1].replaceAll("\\s+", "").charAt(0)) - 1;
+                    getLetter1Int = field.getLetterBind().get(input[0].replaceAll("\\s+", "").toUpperCase().charAt(0)) - 1;
+                    getLetter2Int = field.getLetterBind().get(input[1].replaceAll("\\s+", "").toUpperCase().charAt(0)) - 1;
 
                     getNum1 = Integer.parseInt(input[0].substring(1)) - 1;
                     getNum2 = Integer.parseInt(input[1].substring(1)) - 1;
