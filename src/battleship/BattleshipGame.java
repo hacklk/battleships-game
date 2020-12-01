@@ -1,6 +1,7 @@
 package battleship;
 
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class BattleshipGame {
@@ -84,11 +85,11 @@ public class BattleshipGame {
 
                     //check if ship is too close to one another vertically
                     for (int i = minLetterInt; i <= maxLetterInt; i++) {
-                            if (field.isThereShipForAllSides(i, getNum1)) {
-                                System.out.println("\nError! You placed it too close to another one. Try again:");
-                                tooClose = true;
-                                break;
-                            }
+                        if (field.isThereShipForAllSides(i, getNum1)) {
+                            System.out.println("\nError! You placed it too close to another one. Try again:");
+                            tooClose = true;
+                            break;
+                        }
                     }
 
                     if (tooClose) {
@@ -114,8 +115,10 @@ public class BattleshipGame {
             field.printField();
         }
 
+        Field fieldViewForAShooter = new Field();
+
         System.out.println("The game starts!\n");
-        field.printField();
+        fieldViewForAShooter.printField();
         System.out.println("Take a shot!");
         System.out.println();
 
@@ -129,7 +132,7 @@ public class BattleshipGame {
             try {
                 if (field.getLetterBind().get(shotInput.charAt(0)) != null) {
                     letterInt = field.getLetterBind().get(shotInput.charAt(0)) - 1;
-                }else {
+                } else {
                     continue;
                 }
                 num = Integer.parseInt(shotInput.substring(1)) - 1;
@@ -140,13 +143,21 @@ public class BattleshipGame {
 
             try {
                 if (field.isThereShip(letterInt, num)) {
-                    System.out.println("\nYou hit a ship!\n");
+                    fieldViewForAShooter.getField()[letterInt][num] = "X";
+                } else {
+                    fieldViewForAShooter.getField()[letterInt][num] = "M";
+                }
+
+                fieldViewForAShooter.printField();
+
+                if (field.isThereShip(letterInt, num)) {
+                    System.out.println("You hit a ship!\n");
                     field.getField()[letterInt][num] = "X";
                 } else {
-                    System.out.println("\nYou missed!\n");
+                    System.out.println("You missed!\n");
                     field.getField()[letterInt][num] = "M";
                 }
-            }catch (ArrayIndexOutOfBoundsException e) {
+            } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("\nError! You entered the wrong coordinates! Try again:\n");
                 continue;
             }
