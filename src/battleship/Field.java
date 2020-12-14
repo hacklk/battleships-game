@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class Field {
+class Field {
 
     private String[][] field;
     private StringBuilder stringBuilder;
@@ -83,11 +83,11 @@ public class Field {
 
     public void printField() {
         this.stringBuilder = new StringBuilder();
-        this.stringBuilder.append("  1 2 3 4 5 6 7 8 9 10\n");
+        this.stringBuilder.append(ConsoleColors.RED +"  1 2 3 4 5 6 7 8 9 10\n" + ConsoleColors.RESET);
         this.letters = 'A';
 
         for (int i = 0; i < getField().length; i++) {
-            stringBuilder.append(letters).append(" ");
+            stringBuilder.append(ConsoleColors.RED + letters + ConsoleColors.RESET).append(" ");
             letters++;
             for (int j = 0; j < getField()[i].length; j++) {
                 stringBuilder.append(getField()[i][j]).append(" ");
@@ -176,7 +176,7 @@ public class Field {
                     try {
                         //insert
                         for (int i = minNum; i <= maxNum; i++) {
-                            getField()[getLetter1Int][i] = "O";
+                            getField()[getLetter1Int][i] = ConsoleColors.GREEN_BOLD + "O" + ConsoleColors.RESET;
                             coordinatesHolder.add(new Integer[]{getLetter1Int, i});
                             shipCordsSave.put(ship.getName(), coordinatesHolder);
                         }
@@ -210,7 +210,7 @@ public class Field {
                     try {
                         //insert
                         for (int i = minLetterInt; i <= maxLetterInt; i++) {
-                            getField()[i][getNum1] = "O";
+                            getField()[i][getNum1] = ConsoleColors.GREEN_BOLD + "O" + ConsoleColors.RESET;
                             coordinatesHolder.add(new Integer[]{i, getNum1});
                             shipCordsSave.put(ship.getName(), coordinatesHolder);
                         }

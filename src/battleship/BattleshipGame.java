@@ -1,11 +1,9 @@
 package battleship;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 
-public class BattleshipGame {
+class BattleshipGame {
 
     private Field fieldPlayer1;
     private Field fieldPlayer2;
@@ -18,16 +16,19 @@ public class BattleshipGame {
     }
 
     public void play() {
-        System.out.println("\nFor game rules and description info enter \"rules\".");
-        System.out.println("Enter \"?\" or \"help\" if you don't know how to enter coordinates.\n");
+        clsScreen();
+        System.out.println(ConsoleColors.CYAN_BOLD + "\nFor game rules and description info enter \"rules\".");
+        System.out.println("Enter \"?\" or \"help\" if you don't know how to enter coordinates.\n" + ConsoleColors.RESET);
 
-        System.out.println("Player 1, place your ships on the game field\n");
+        System.out.println(ConsoleColors.GREEN_BOLD + "Player 1, place your ships on the game field\n" + ConsoleColors.RESET);
         fieldPlayer1.printField();
         System.out.println();
         fieldPlayer1.shipInsertion(scanner);
         promptEnterKey();
 
-        System.out.println("Player 2, place your ships to the game field\n");
+        clsScreen();
+
+        System.out.println(ConsoleColors.CYAN_BOLD + "Player 2, place your ships to the game field\n" + ConsoleColors.RESET);
         fieldPlayer2.printField();
         fieldPlayer2.shipInsertion(scanner);
 
@@ -40,16 +41,15 @@ public class BattleshipGame {
 
             int letterInt = 0;
             int num = 0;
-            boolean sunken = false;
 
             promptEnterKey();
 
             if (whoseTurn % 2 == 0) {
 
-                System.out.println("Player 1, it's your turn:");
+                System.out.println(ConsoleColors.GREEN_BOLD + "Player 1, it's your turn:" + ConsoleColors.RESET);
                 System.out.println();
                 enemyFieldViewForPlayer1.printField();
-                System.out.println("---------------------");
+                System.out.println(ConsoleColors.CYAN_BACKGROUND + "---------------------" + ConsoleColors.RESET);
                 fieldPlayer1.printField();
 
 
@@ -57,16 +57,12 @@ public class BattleshipGame {
                     System.out.print("\n> ");
                     String shotInput = scanner.nextLine().toUpperCase();
                     try {
-                        try {
-                            if (fieldPlayer1.getLetterBind().get(shotInput.charAt(0)) != null) {
-                                letterInt = fieldPlayer1.getLetterBind().get(shotInput.charAt(0)) - 1;
-                            } else {
-                                continue;
-                            }
-                        } catch (StringIndexOutOfBoundsException e) {
-                            System.out.println("\nError");
+                        if (fieldPlayer1.getLetterBind().get(shotInput.charAt(0)) != null) {
+                            letterInt = fieldPlayer1.getLetterBind().get(shotInput.charAt(0)) - 1;
+                        } else {
                             continue;
                         }
+
                         num = Integer.parseInt(shotInput.substring(1)) - 1;
                     } catch (Exception e) {
                         System.out.println("\nError");
@@ -78,10 +74,10 @@ public class BattleshipGame {
                         //inserting X or M into enemy (user) table
                         if (fieldPlayer2.isThereShip(letterInt, num) || fieldPlayer2.isThereHit(letterInt, num)) {
 
-                            enemyFieldViewForPlayer1.getField()[letterInt][num] = "X";
+                            enemyFieldViewForPlayer1.getField()[letterInt][num] = ConsoleColors.GREEN_BOLD + "X" + ConsoleColors.RESET;
 
                         } else {
-                            enemyFieldViewForPlayer1.getField()[letterInt][num] = "M";
+                            enemyFieldViewForPlayer1.getField()[letterInt][num] = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
                         }
 
 
@@ -111,26 +107,22 @@ public class BattleshipGame {
 
             } else {
 
-                System.out.println("Player 2, it's your turn:");
+                System.out.println(ConsoleColors.CYAN_BOLD + "Player 2, it's your turn:" + ConsoleColors.RESET);
                 System.out.println();
                 enemyFieldViewForPlayer2.printField();
-                System.out.println("---------------------");
+                System.out.println(ConsoleColors.CYAN_BACKGROUND + "---------------------" + ConsoleColors.RESET);
                 fieldPlayer2.printField();
 
                 while (true) {
                     System.out.print("\n> ");
                     String shotInput = scanner.nextLine().toUpperCase();
                     try {
-                        try {
-                            if (fieldPlayer2.getLetterBind().get(shotInput.charAt(0)) != null) {
-                                letterInt = fieldPlayer2.getLetterBind().get(shotInput.charAt(0)) - 1;
-                            } else {
-                                continue;
-                            }
-                        } catch (StringIndexOutOfBoundsException e) {
-                            System.out.println("\nError");
+                        if (fieldPlayer2.getLetterBind().get(shotInput.charAt(0)) != null) {
+                            letterInt = fieldPlayer2.getLetterBind().get(shotInput.charAt(0)) - 1;
+                        } else {
                             continue;
                         }
+
                         num = Integer.parseInt(shotInput.substring(1)) - 1;
                     } catch (Exception e) {
                         System.out.println("\nError");
@@ -142,10 +134,10 @@ public class BattleshipGame {
                         //inserting X or M into enemy (user) table
                         if (fieldPlayer1.isThereShip(letterInt, num) || fieldPlayer1.isThereHit(letterInt, num)) {
 
-                            enemyFieldViewForPlayer2.getField()[letterInt][num] = "X";
+                            enemyFieldViewForPlayer2.getField()[letterInt][num] = ConsoleColors.GREEN_BOLD + "X" + ConsoleColors.RESET;
 
                         } else {
-                            enemyFieldViewForPlayer2.getField()[letterInt][num] = "M";
+                            enemyFieldViewForPlayer2.getField()[letterInt][num] = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
                         }
 
 
@@ -189,7 +181,7 @@ public class BattleshipGame {
     }
 
 
-    public static void clrscr() {
+    public static void clsScreen() {
 
         //Clears Screen
 
@@ -197,7 +189,7 @@ public class BattleshipGame {
 
             if (System.getProperty("os.name").contains("Windows"))
 
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+                new ProcessBuilder("/c", "cls").inheritIO().start().waitFor();
 
             else
 

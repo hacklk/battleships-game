@@ -1,6 +1,6 @@
 package battleship;
 
-public enum Ship {
+enum Ship {
 
     CARRIER("Aircraft Carrier", 5),
     BATTLESHIP("Battleship", 4),
