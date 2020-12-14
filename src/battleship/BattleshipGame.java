@@ -1,244 +1,209 @@
 package battleship;
 
-import java.lang.reflect.Array;
-import java.text.ParseException;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class BattleshipGame {
 
-    private Field field;
+    private Field fieldPlayer1;
+    private Field fieldPlayer2;
     private Scanner scanner;
-    private HashMap<String, ArrayList<Integer[]>> shipCordsSave; // (Y and X Cords)(Ship Length)
 
-    public BattleshipGame(Field field, Scanner scanner) {
-        this.field = field;
+    public BattleshipGame(Field fieldPlayer1, Field fieldPlayer2, Scanner scanner) {
+        this.fieldPlayer1 = fieldPlayer1;
+        this.fieldPlayer2 = fieldPlayer2;
         this.scanner = scanner;
-        this.shipCordsSave = new HashMap<>();
     }
 
     public void play() {
-        this.field.printField();
+        System.out.println("Player 1, place your ships on the game field\n");
+        fieldPlayer1.printField();
+        System.out.println();
+        fieldPlayer1.shipInsertion(scanner);
+        promptEnterKey();
 
-        for (Ship ship : Ship.values()) {
+        System.out.println("Player 2, place your ships to the game field\n");
+        fieldPlayer2.printField();
+        fieldPlayer2.shipInsertion(scanner);
 
-            System.out.println("Enter the coordinates of the " + ship.getName() + " (" + ship.getLength() + " cells): ");
+        Field enemyFieldViewForPlayer1 = new Field();
+        Field enemyFieldViewForPlayer2 = new Field();
 
-            while (true) {
+        int whoseTurn = 0;
+
+        while (true) {
+
+            int letterInt = 0;
+            int num = 0;
+            boolean sunken = false;
+
+            promptEnterKey();
+
+            if (whoseTurn % 2 == 0) {
+
+                System.out.println("Player 1, it's your turn:");
                 System.out.println();
-                System.out.print("> ");
-                String[] input = scanner.nextLine().trim().split(" ");
-                int getLetter1Int, getLetter2Int, getNum1, getNum2;
-
-                try {
-                    getLetter1Int = field.getLetterBind().get(input[0].replaceAll("\\s+", "").toUpperCase().charAt(0)) - 1;
-                    getLetter2Int = field.getLetterBind().get(input[1].replaceAll("\\s+", "").toUpperCase().charAt(0)) - 1;
-
-                    getNum1 = Integer.parseInt(input[0].substring(1)) - 1;
-                    getNum2 = Integer.parseInt(input[1].substring(1)) - 1;
-                } catch (Exception e) {
-                    System.out.println("\nError");
-                    continue;
-                }
-                int getLength;
-
-                int minNum = Math.min(getNum1, getNum2);
-                int maxNum = Math.max(getNum1, getNum2);
-                int minLetterInt = Math.min(getLetter1Int, getLetter2Int);
-                int maxLetterInt = Math.max(getLetter1Int, getLetter2Int);
-                boolean tooClose = false;
-
-                ArrayList<Integer[]> coordinatesHolder = new ArrayList<>();
-
-                if (getLetter1Int == getLetter2Int) {      //inserting ships horizontally
-                    getLength = maxNum - minNum + 1;
-                    //checking if entered length of the ship is correct
-                    if (getLength != ship.getLength()) { //checking if entered length of the ship is correct
-                        System.out.println("\nError! Wrong length of the " + ship.getName() + "! Try again:");
-                        continue;
-                    }
-
-                    //check if ship is too close to another horizontally
-                    for (int i = minNum; i <= maxNum; i++) {
-                        if (field.isThereShipForAllSides(getLetter1Int, i)) {
-                            System.out.println("\nError! You placed it too close to another one. Try again:");
-                            tooClose = true;
-                            break;
-                        }
-                    }
-
-                    if (tooClose) {
-                        continue;
-                    }
+                enemyFieldViewForPlayer1.printField();
+                System.out.println("---------------------");
+                fieldPlayer1.printField();
 
 
+                while (true) {
+                    System.out.print("\n> ");
+                    String shotInput = scanner.nextLine().toUpperCase();
                     try {
-                        //insert
-                        for (int i = minNum; i <= maxNum; i++) {
-                            field.getField()[getLetter1Int][i] = "O";
-                            coordinatesHolder.add(new Integer[]{getLetter1Int, i});
-                            shipCordsSave.put(ship.getName(), coordinatesHolder);
+                        try {
+                            if (fieldPlayer1.getLetterBind().get(shotInput.charAt(0)) != null) {
+                                letterInt = fieldPlayer1.getLetterBind().get(shotInput.charAt(0)) - 1;
+                            } else {
+                                continue;
+                            }
+                        } catch (StringIndexOutOfBoundsException e) {
+                            System.out.println("\nError");
+                            continue;
                         }
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("\nError");
-                        continue;
-                    }
-
-                    break;
-                } else if (getNum1 == getNum2) {         //inserting ships vertically
-                    getLength = maxLetterInt - minLetterInt + 1;
-                    //checking if entered length of the ship is correct
-                    if (getLength != ship.getLength()) {
-                        System.out.println("\nError! Wrong length of the " + ship.getName() + "! Try again:");
-                        continue;
-                    }
-
-                    //check if ship is too close to one another vertically
-                    for (int i = minLetterInt; i <= maxLetterInt; i++) {
-                        if (field.isThereShipForAllSides(i, getNum1)) {
-                            System.out.println("\nError! You placed it too close to another one. Try again:");
-                            tooClose = true;
-                            break;
-                        }
-                    }
-
-                    if (tooClose) {
-                        continue;
-                    }
-
-                    try {
-                        //insert
-                        for (int i = minLetterInt; i <= maxLetterInt; i++) {
-                            field.getField()[i][getNum1] = "O";
-                            coordinatesHolder.add(new Integer[]{i, getNum1});
-                            shipCordsSave.put(ship.getName(), coordinatesHolder);
-                        }
+                        num = Integer.parseInt(shotInput.substring(1)) - 1;
                     } catch (Exception e) {
                         System.out.println("\nError");
                         continue;
                     }
 
-                    break;
-                } else {
-                    System.out.println("\nError! Wrong ship location! Try again:");
-                }
 
-            }
-            System.out.println();
-            field.printField();
-        }
+                    try {
+                        //inserting X or M into enemy (user) table
+                        if (fieldPlayer2.isThereShip(letterInt, num) || fieldPlayer2.isThereHit(letterInt, num)) {
 
-        //      for printing coordinates for each ship
-//        for (String x : shipCordsSave.keySet()) {
-//            System.out.print(x+ " cell ship: ");
-//            for (Integer[] cords : shipCordsSave.get(x)) {
-//                System.out.print(Arrays.toString(cords) + ">> ");
-//            }
-//            System.out.println();
-//        }
+                            enemyFieldViewForPlayer1.getField()[letterInt][num] = "X";
+
+                        } else {
+                            enemyFieldViewForPlayer1.getField()[letterInt][num] = "M";
+                        }
 
 
-        Field fieldViewForAShooter = new Field();
-
-        System.out.println("The game starts!\n");
-        fieldViewForAShooter.printField();
-        System.out.println("Take a shot!");
-        System.out.println();
-
-        while (true) {
-            int letterInt = 0;
-            int num = 0;
-            boolean sunken = false;
-
-            System.out.print("> ");
-            String shotInput = scanner.nextLine().toUpperCase();
-
-            try {
-                try {
-                    if (field.getLetterBind().get(shotInput.charAt(0)) != null) {
-                        letterInt = field.getLetterBind().get(shotInput.charAt(0)) - 1;
-                    } else {
-                        continue;
-                    }
-                }catch (StringIndexOutOfBoundsException e) {
-                    System.out.println("\nError\n");
-                    continue;
-                }
-                num = Integer.parseInt(shotInput.substring(1)) - 1;
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("\nError\n");
-                continue;
-            }
-
-            try {
-                //inserting X or M into enemy (user) table
-                if (field.isThereShip(letterInt, num) || field.isThereHit(letterInt, num)) {
-
-                    fieldViewForAShooter.getField()[letterInt][num] = "X";
-
-                } else {
-                    fieldViewForAShooter.getField()[letterInt][num] = "M";
-                }
-
-                fieldViewForAShooter.printField();
-
-                //inserting X or M into the table who inserted ships
-                if (field.isThereShip(letterInt, num) || field.isThereHit(letterInt, num)) {
-                    field.getField()[letterInt][num] = "X";
-                    if (isShipSunken(letterInt, num)) {
-                        if (shipCordsSave.isEmpty()) {
-                            System.out.println("You sank the last ship. You won. Congratulations!\n");
+                        //inserting X or M into the table who inserted ships
+                        if (fieldPlayer2.isThereShip(letterInt, num) || fieldPlayer2.isThereHit(letterInt, num)) {
+                            fieldPlayer2.getField()[letterInt][num] = "X";
+                            if (fieldPlayer2.isShipSunken(letterInt, num)) {
+                                if (fieldPlayer2.getShipCordsSave().isEmpty()) {
+                                    System.out.println("\nPlayer 1 sank the last ship. You won. Congratulations!");
+                                    return;
+                                }
+                                System.out.println("\nYou sank a ship!\n");
+                            } else {
+                                System.out.println("\nYou hit a ship!");
+                            }
+                            break;
+                        } else {
+                            System.out.println("\nYou missed!\n");
+                            fieldPlayer2.getField()[letterInt][num] = "M";
                             break;
                         }
-                        System.out.println("You sank a ship! Specify a new target:\n");
-                    }else {
-                        System.out.println("You hit a ship!\n");
+
+                    } catch (Exception e) {
+                        System.out.println("\nError! You entered the wrong coordinates! Try again:");
                     }
-                } else if (field.isThereShip(letterInt, num) || field.isThereMiss(letterInt, num)) {
-                    System.out.println("You missed!\n");
-                    field.getField()[letterInt][num] = "M";
                 }
 
+            } else {
 
-            } catch (Exception e) {
-                System.out.println("\nError! You entered the wrong coordinates! Try again:\n");
+                System.out.println("Player 2, it's your turn:");
+                System.out.println();
+                enemyFieldViewForPlayer2.printField();
+                System.out.println("---------------------");
+                fieldPlayer2.printField();
+
+                while (true) {
+                    System.out.print("\n> ");
+                    String shotInput = scanner.nextLine().toUpperCase();
+                    try {
+                        try {
+                            if (fieldPlayer2.getLetterBind().get(shotInput.charAt(0)) != null) {
+                                letterInt = fieldPlayer2.getLetterBind().get(shotInput.charAt(0)) - 1;
+                            } else {
+                                continue;
+                            }
+                        } catch (StringIndexOutOfBoundsException e) {
+                            System.out.println("\nError");
+                            continue;
+                        }
+                        num = Integer.parseInt(shotInput.substring(1)) - 1;
+                    } catch (Exception e) {
+                        System.out.println("\nError");
+                        continue;
+                    }
+
+
+                    try {
+                        //inserting X or M into enemy (user) table
+                        if (fieldPlayer1.isThereShip(letterInt, num) || fieldPlayer1.isThereHit(letterInt, num)) {
+
+                            enemyFieldViewForPlayer2.getField()[letterInt][num] = "X";
+
+                        } else {
+                            enemyFieldViewForPlayer2.getField()[letterInt][num] = "M";
+                        }
+
+
+                        //inserting X or M into the table who inserted ships
+                        if (fieldPlayer1.isThereShip(letterInt, num) || fieldPlayer1.isThereHit(letterInt, num)) {
+                            fieldPlayer1.getField()[letterInt][num] = "X";
+                            if (fieldPlayer1.isShipSunken(letterInt, num)) {
+                                if (fieldPlayer1.getShipCordsSave().isEmpty()) {
+                                    System.out.println("\nPlayer 2 sank the last ship. You won. Congratulations!\n");
+                                    return;
+                                }
+                                System.out.println("\nYou sank a ship!\n");
+                            } else {
+                                System.out.println("\nYou hit a ship!");
+                            }
+                            break;
+                        } else {
+                            System.out.println("\nYou missed!\n");
+                            fieldPlayer1.getField()[letterInt][num] = "M";
+                            break;
+                        }
+
+
+                    } catch (Exception e) {
+                        System.out.println("\nError! You entered the wrong coordinates! Try again:");
+                    }
+                }
+
             }
+            whoseTurn++;
         }
     }
 
-    public boolean isShipSunken(int y, int x) {
+    public static void promptEnterKey() {
+        System.out.println("Press Enter and pass the move to another player");
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-        boolean sunken = false;
-        String nameOfTheShip = "";
 
-        for (String shipName : shipCordsSave.keySet()) {
+    public static void clrscr() {
 
-            for (int i = 0; i < shipCordsSave.get(shipName).size(); i++) {
-                if (y == shipCordsSave.get(shipName).get(i)[0] && x == shipCordsSave.get(shipName).get(i)[1]) {
+        //Clears Screen
 
-                    nameOfTheShip = shipName;
-                    break;
-                }
-            }
+        try {
 
+            if (System.getProperty("os.name").contains("Windows"))
+
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+
+            else
+
+                Runtime.getRuntime().exec("clear");
+
+        } catch (IOException | InterruptedException ignored) {
         }
 
-        int cellCount = 0;
-        for (Integer[] cords : shipCordsSave.get(nameOfTheShip)) {
-
-            if (field.isThereHit(cords[0], cords[1])) {
-                cellCount++;
-            }
-
-            if (cellCount == shipCordsSave.get(nameOfTheShip).size()) {
-                shipCordsSave.remove(nameOfTheShip);
-                sunken = true;
-                break;
-            }
-        }
-
-        return sunken;
     }
 }
+
+
