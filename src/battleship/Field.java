@@ -111,6 +111,23 @@ public class Field {
                 String[] input = scanner.nextLine().trim().split(" ");
                 int getLetter1Int, getLetter2Int, getNum1, getNum2;
 
+                if ('?' == input[0].charAt(0) || "help".equals(input[0].substring(0, 4).toLowerCase())) {
+                    System.out.println("EXAMPLE How to enter coordinates:");
+                    System.out.println("> F1 F5 (press enter to accept)");
+                    continue;
+                } else if ("rules".equals(input[0].substring(0, 5).toLowerCase())) {
+                    System.out.println("The game is played on four grids, two for each player. " +
+                            "\nThe grids are typically square – usually 10×10 – and the individual squares in the grid are identified by letter and number. " +
+                            "\n[7] On one grid the player arranges ships and records the shots by the opponent. " +
+                            "\nOn the other grid the player records their own shots.\n" +
+                            "\nBefore play begins, each player secretly arranges their ships on their primary grid. " +
+                            "\nEach ship occupies a number of consecutive squares on the grid, arranged either horizontally or vertically. " +
+                            "\nThe number of squares for each ship is determined by the type of the ship. " +
+                            "\nThe ships cannot overlap (i.e., only one ship can occupy any given square in the grid). " +
+                            "\nThe types and numbers of ships allowed are the same for each player. \nThese may vary depending on the rules. ");
+                    continue;
+                }
+
                 try {
                     getLetter1Int = getLetterBind().get(input[0].replaceAll("\\s+", "").toUpperCase().charAt(0)) - 1;
                     getLetter2Int = getLetterBind().get(input[1].replaceAll("\\s+", "").toUpperCase().charAt(0)) - 1;
@@ -211,66 +228,6 @@ public class Field {
         }
     }
 
-//    public void shooting(Field fieldEnemyView, Scanner scanner) {
-//        int letterInt = 0;
-//        int num = 0;
-//        boolean sunken = false;
-//
-//        System.out.print("> ");
-//        String shotInput = scanner.nextLine().toUpperCase();
-//
-//        try {
-//            try {
-//                if (getLetterBind().get(shotInput.charAt(0)) != null) {
-//                    letterInt = getLetterBind().get(shotInput.charAt(0)) - 1;
-//                } else {
-//                    continue;
-//                }
-//            }catch (StringIndexOutOfBoundsException e) {
-//                System.out.println("\nError\n");
-//                continue;
-//            }
-//            num = Integer.parseInt(shotInput.substring(1)) - 1;
-//        } catch (ArrayIndexOutOfBoundsException e) {
-//            System.out.println("\nError\n");
-//            continue;
-//        }
-//
-//        try {
-//            //inserting X or M into enemy (user) table
-//            if (isThereShip(letterInt, num) || isThereHit(letterInt, num)) {
-//
-//                fieldEnemyView.getField()[letterInt][num] = "X";
-//
-//            } else {
-//                fieldEnemyView.getField()[letterInt][num] = "M";
-//            }
-//
-//            fieldEnemyView.printField();
-//
-//            //inserting X or M into the table who inserted ships
-//            if (isThereShip(letterInt, num) || isThereHit(letterInt, num)) {
-//                getField()[letterInt][num] = "X";
-//                if (isShipSunken(letterInt, num)) {
-//                    if (shipCordsSave.isEmpty()) {
-//                        System.out.println("You sank the last ship. You won. Congratulations!\n");
-//                        break;
-//                    }
-//                    System.out.println("You sank a ship! Specify a new target:\n");
-//                }else {
-//                    System.out.println("You hit a ship!\n");
-//                }
-//            } else if (isThereShip(letterInt, num) || isThereMiss(letterInt, num)) {
-//                System.out.println("You missed!\n");
-//                getField()[letterInt][num] = "M";
-//            }
-//
-//
-//        } catch (Exception e) {
-//            System.out.println("\nError! You entered the wrong coordinates! Try again:\n");
-//        }
-//    }
-
     public boolean isShipSunken(int y, int x) {
 
         boolean sunken = false;
@@ -304,7 +261,7 @@ public class Field {
                     break;
                 }
             }
-        }else {
+        } else {
             sunken = true;
         }
 

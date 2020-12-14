@@ -18,6 +18,9 @@ public class BattleshipGame {
     }
 
     public void play() {
+        System.out.println("\nFor game rules and description info enter \"rules\".");
+        System.out.println("Enter \"?\" or \"help\" if you don't know how to enter coordinates.\n");
+
         System.out.println("Player 1, place your ships on the game field\n");
         fieldPlayer1.printField();
         System.out.println();
