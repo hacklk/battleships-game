@@ -111,22 +111,25 @@ public class Field {
                 String[] input = scanner.nextLine().trim().split(" ");
                 int getLetter1Int, getLetter2Int, getNum1, getNum2;
 
-                if ('?' == input[0].charAt(0) || "help".equals(input[0].substring(0, 4).toLowerCase())) {
-                    System.out.println("EXAMPLE How to enter coordinates:");
-                    System.out.println("> F1 F5 (press enter to accept)");
-                    continue;
-                } else if ("rules".equals(input[0].substring(0, 5).toLowerCase())) {
-                    System.out.println("The game is played on four grids, two for each player. " +
-                            "\nThe grids are typically square – usually 10×10 – and the individual squares in the grid are identified by letter and number. " +
-                            "\n[7] On one grid the player arranges ships and records the shots by the opponent. " +
-                            "\nOn the other grid the player records their own shots.\n" +
-                            "\nBefore play begins, each player secretly arranges their ships on their primary grid. " +
-                            "\nEach ship occupies a number of consecutive squares on the grid, arranged either horizontally or vertically. " +
-                            "\nThe number of squares for each ship is determined by the type of the ship. " +
-                            "\nThe ships cannot overlap (i.e., only one ship can occupy any given square in the grid). " +
-                            "\nThe types and numbers of ships allowed are the same for each player. \nThese may vary depending on the rules. ");
-                    continue;
-                }
+                try {
+
+                    if ('?' == input[0].charAt(0) || "help".equals(input[0].substring(0, 4).toLowerCase())) {
+                        System.out.println("EXAMPLE How to enter coordinates:");
+                        System.out.println("> F1 F5 (press enter to accept)");
+                        continue;
+                    } else if ("rules".equals(input[0].substring(0, 5).toLowerCase())) {
+                        System.out.println("The game is played on four grids, two for each player. " +
+                                "\nThe grids are typically square – usually 10×10 – and the individual squares in the grid are identified by letter and number." +
+                                "\nOn one grid the player arranges ships and records the shots by the opponent. " +
+                                "\nOn the other grid the player records their own shots.\n" +
+                                "\nBefore play begins, each player secretly arranges their ships on their primary grid. " +
+                                "\nEach ship occupies a number of consecutive squares on the grid, arranged either horizontally or vertically. " +
+                                "\nThe number of squares for each ship is determined by the type of the ship. " +
+                                "\nThe ships cannot overlap (i.e., only one ship can occupy any given square in the grid). " +
+                                "\nThe types and numbers of ships allowed are the same for each player. \nThese may vary depending on the rules. ");
+                        continue;
+                    }
+                }catch (IndexOutOfBoundsException ignored) {}
 
                 try {
                     getLetter1Int = getLetterBind().get(input[0].replaceAll("\\s+", "").toUpperCase().charAt(0)) - 1;
