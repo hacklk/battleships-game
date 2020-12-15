@@ -24,8 +24,8 @@ class BattleshipGame {
         fieldPlayer1.printField();
         System.out.println();
         fieldPlayer1.shipInsertion(scanner);
-        promptEnterKey();
 
+        promptEnterKey();
         clsScreen();
 
         System.out.println(ConsoleColors.CYAN_BOLD + "Player 2, place your ships to the game field\n" + ConsoleColors.RESET);
@@ -43,13 +43,14 @@ class BattleshipGame {
             int num = 0;
 
             promptEnterKey();
+            clsScreen();
 
             if (whoseTurn % 2 == 0) {
 
                 System.out.println(ConsoleColors.GREEN_BOLD + "Player 1, it's your turn:" + ConsoleColors.RESET);
                 System.out.println();
                 enemyFieldViewForPlayer1.printField();
-                System.out.println(ConsoleColors.CYAN_BACKGROUND + "---------------------" + ConsoleColors.RESET);
+                System.out.println("---------------------");
                 fieldPlayer1.printField();
 
 
@@ -63,6 +64,8 @@ class BattleshipGame {
                             continue;
                         }
 
+                        if (letterInt > 9) { throw new IndexOutOfBoundsException("Error: Please enter letters A-J"); }
+
                         num = Integer.parseInt(shotInput.substring(1)) - 1;
                     } catch (Exception e) {
                         System.out.println("\nError");
@@ -74,7 +77,7 @@ class BattleshipGame {
                         //inserting X or M into enemy (user) table
                         if (fieldPlayer2.isThereShip(letterInt, num) || fieldPlayer2.isThereHit(letterInt, num)) {
 
-                            enemyFieldViewForPlayer1.getField()[letterInt][num] = ConsoleColors.GREEN_BOLD + "X" + ConsoleColors.RESET;
+                            enemyFieldViewForPlayer1.getField()[letterInt][num] = ConsoleColors.RED + "X" + ConsoleColors.RESET;
 
                         } else {
                             enemyFieldViewForPlayer1.getField()[letterInt][num] = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
@@ -83,22 +86,21 @@ class BattleshipGame {
 
                         //inserting X or M into the table who inserted ships
                         if (fieldPlayer2.isThereShip(letterInt, num) || fieldPlayer2.isThereHit(letterInt, num)) {
-                            fieldPlayer2.getField()[letterInt][num] = "X";
+                            fieldPlayer2.getField()[letterInt][num] = ConsoleColors.RED + "X" + ConsoleColors.RESET;
                             if (fieldPlayer2.isShipSunken(letterInt, num)) {
                                 if (fieldPlayer2.getShipCordsSave().isEmpty()) {
-                                    System.out.println("\nPlayer 1 sank the last ship. You won. Congratulations!");
+                                    System.out.println(ConsoleColors.GREEN_BOLD + "\nPlayer 1 sank the last ship. You won. Congratulations!" + ConsoleColors.RESET);
                                     return;
                                 }
-                                System.out.println("\nYou sank a ship!\n");
+                                System.out.println(ConsoleColors.GREEN_BOLD + "\nYou sank a ship!\n" + ConsoleColors.RESET);
                             } else {
-                                System.out.println("\nYou hit a ship!");
+                                System.out.println(ConsoleColors.GREEN_BOLD + "\nYou hit a ship!" + ConsoleColors.RESET);
                             }
-                            break;
                         } else {
-                            System.out.println("\nYou missed!\n");
-                            fieldPlayer2.getField()[letterInt][num] = "M";
-                            break;
+                            System.out.println(ConsoleColors.CYAN_BOLD + "\nYou missed!" + ConsoleColors.RESET);
+                            fieldPlayer2.getField()[letterInt][num] = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
                         }
+                        break;
 
                     } catch (Exception e) {
                         System.out.println("\nError! You entered the wrong coordinates! Try again:");
@@ -110,7 +112,7 @@ class BattleshipGame {
                 System.out.println(ConsoleColors.CYAN_BOLD + "Player 2, it's your turn:" + ConsoleColors.RESET);
                 System.out.println();
                 enemyFieldViewForPlayer2.printField();
-                System.out.println(ConsoleColors.CYAN_BACKGROUND + "---------------------" + ConsoleColors.RESET);
+                System.out.println("---------------------");
                 fieldPlayer2.printField();
 
                 while (true) {
@@ -134,7 +136,7 @@ class BattleshipGame {
                         //inserting X or M into enemy (user) table
                         if (fieldPlayer1.isThereShip(letterInt, num) || fieldPlayer1.isThereHit(letterInt, num)) {
 
-                            enemyFieldViewForPlayer2.getField()[letterInt][num] = ConsoleColors.GREEN_BOLD + "X" + ConsoleColors.RESET;
+                            enemyFieldViewForPlayer2.getField()[letterInt][num] = ConsoleColors.RED + "X" + ConsoleColors.RESET;
 
                         } else {
                             enemyFieldViewForPlayer2.getField()[letterInt][num] = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
@@ -143,20 +145,20 @@ class BattleshipGame {
 
                         //inserting X or M into the table who inserted ships
                         if (fieldPlayer1.isThereShip(letterInt, num) || fieldPlayer1.isThereHit(letterInt, num)) {
-                            fieldPlayer1.getField()[letterInt][num] = "X";
+                            fieldPlayer1.getField()[letterInt][num] = ConsoleColors.RED + "X" + ConsoleColors.RESET;
                             if (fieldPlayer1.isShipSunken(letterInt, num)) {
                                 if (fieldPlayer1.getShipCordsSave().isEmpty()) {
-                                    System.out.println("\nPlayer 2 sank the last ship. You won. Congratulations!\n");
+                                    System.out.println(ConsoleColors.GREEN_BOLD + "\nPlayer 2 sank the last ship. You won. Congratulations!\n" + ConsoleColors.RESET);
                                     return;
                                 }
-                                System.out.println("\nYou sank a ship!\n");
+                                System.out.println(ConsoleColors.GREEN_BOLD + "\nYou sank a ship!\n" + ConsoleColors.RESET);
                             } else {
-                                System.out.println("\nYou hit a ship!");
+                                System.out.println(ConsoleColors.GREEN_BOLD + "\nYou hit a ship!" + ConsoleColors.RESET);
                             }
                             break;
                         } else {
-                            System.out.println("\nYou missed!\n");
-                            fieldPlayer1.getField()[letterInt][num] = "M";
+                            System.out.println(ConsoleColors.CYAN_BOLD + "\nYou missed!" + ConsoleColors.RESET);
+                            fieldPlayer1.getField()[letterInt][num] = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
                             break;
                         }
 
@@ -171,15 +173,29 @@ class BattleshipGame {
         }
     }
 
-    public static void promptEnterKey() {
+
+    public void promptEnterKey() {
         System.out.println("Press Enter and pass the move to another player");
-        try {
-            System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
     }
 
+
+    public static void cmdColorInit() {
+
+        try {
+
+            if (System.getProperty("os.name").contains("Windows"))
+
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+
+            else
+
+                Runtime.getRuntime().exec("clear");
+
+        } catch (IOException | InterruptedException ignored) {
+        }
+    }
 
     public static void clsScreen() {
 
@@ -189,7 +205,7 @@ class BattleshipGame {
 
             if (System.getProperty("os.name").contains("Windows"))
 
-                new ProcessBuilder("/c", "cls").inheritIO().start().waitFor();
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 
             else
 

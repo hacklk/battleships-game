@@ -36,15 +36,18 @@ class Field {
     }
 
     public boolean isThereShip(int y, int x) {
-        return "O".contains(getField()[y][x]);
+        String ship = ConsoleColors.GREEN_BOLD + "O" + ConsoleColors.RESET;
+        return ship.contains(getField()[y][x]);
     }
 
     public boolean isThereHit(int y, int x) {
-        return "X".contains(getField()[y][x]);
+        String hit = ConsoleColors.RED + "X" + ConsoleColors.RESET;
+        return hit.contains(getField()[y][x]);
     }
 
     public boolean isThereMiss(int y, int x) {
-        return "M".contains(getField()[y][x]);
+        String miss = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
+        return miss.contains(getField()[y][x]);
     }
 
     public boolean isThereShipForAllSides(int y, int x) {
@@ -138,6 +141,7 @@ class Field {
                     getNum1 = Integer.parseInt(input[0].substring(1)) - 1;
                     getNum2 = Integer.parseInt(input[1].substring(1)) - 1;
                 } catch (Exception e) {
+                    System.out.println(e);
                     System.out.println("\nError");
                     continue;
                 }
@@ -226,8 +230,10 @@ class Field {
 
             }
             System.out.println();
+            BattleshipGame.clsScreen();
             printField();
             System.out.println();
+
         }
     }
 
