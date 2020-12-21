@@ -17,10 +17,10 @@ class BattleshipGame {
 
     public void play() {
         clsScreen();
-        System.out.println(ConsoleColors.CYAN_BOLD + "\nFor game rules and description info enter \"rules\".");
-        System.out.println("Enter \"?\" or \"help\" if you don't know how to enter coordinates.\n" + ConsoleColors.RESET);
+        System.out.println("\nFor game rules and description info enter \"rules\".");
+        System.out.println("Enter \"?\" or \"help\" if you don't know how to enter coordinates.\n");
 
-        System.out.println(ConsoleColors.GREEN_BOLD + "Player 1, place your ships on the game field\n" + ConsoleColors.RESET);
+        System.out.println("Player 1, place your ships on the game field\n");
         fieldPlayer1.printField();
         System.out.println();
         fieldPlayer1.shipInsertion(scanner);
@@ -29,7 +29,7 @@ class BattleshipGame {
         promptEnterToAnotherTurn();
         clsScreen();
 
-        System.out.println(ConsoleColors.CYAN_BOLD + "Player 2, place your ships to the game field\n" + ConsoleColors.RESET);
+        System.out.println("Player 2, place your ships to the game field\n");
         fieldPlayer2.printField();
         fieldPlayer2.shipInsertion(scanner);
 
@@ -52,7 +52,7 @@ class BattleshipGame {
 
             if (whoseTurn % 2 == 0) {
 
-                System.out.println(ConsoleColors.GREEN_BOLD + "Player 1, it's your turn:" + ConsoleColors.RESET);
+                System.out.println("Player 1, it's your turn:");
                 System.out.println();
                 enemyFieldViewForPlayer1.printField();
                 System.out.println("---------------------");
@@ -84,30 +84,30 @@ class BattleshipGame {
                         //inserting X or M into enemy (user) table
                         if (fieldPlayer2.isThereShip(letterInt, num) || fieldPlayer2.isThereHit(letterInt, num)) {
 
-                            enemyFieldViewForPlayer1.getField()[letterInt][num] = ConsoleColors.RED + "X" + ConsoleColors.RESET;
+                            enemyFieldViewForPlayer1.getField()[letterInt][num] = "X";
 
                         } else {
-                            enemyFieldViewForPlayer1.getField()[letterInt][num] = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
+                            enemyFieldViewForPlayer1.getField()[letterInt][num] = "M";
                         }
 
 
                         //inserting X or M into the table who inserted ships
                         if (fieldPlayer2.isThereShip(letterInt, num) || fieldPlayer2.isThereHit(letterInt, num)) {
-                            fieldPlayer2.getField()[letterInt][num] = ConsoleColors.RED + "X" + ConsoleColors.RESET;
+                            fieldPlayer2.getField()[letterInt][num] = "X";
                             if (fieldPlayer2.isShipSunken(letterInt, num)) {
                                 if (fieldPlayer2.getShipCordsSave().isEmpty()) {
-                                    System.out.println(ConsoleColors.GREEN_BOLD + "\nPlayer 1 sank the last ship. You won. Congratulations!" + ConsoleColors.RESET);
+                                    System.out.println("\nPlayer 1 sank the last ship. You won. Congratulations!");
                                     System.out.println("\nPress enter to exit the program...");
                                     scanner.nextLine();
                                     return;
                                 }
-                                System.out.println(ConsoleColors.GREEN_BOLD + "\nYou sank a ship!\n" + ConsoleColors.RESET);
+                                System.out.println("\nYou sank a ship!\n");
                             } else {
-                                System.out.println(ConsoleColors.GREEN_BOLD + "\nYou hit a ship!" + ConsoleColors.RESET);
+                                System.out.println("\nYou hit a ship!");
                             }
                         } else {
-                            System.out.println(ConsoleColors.CYAN_BOLD + "\nYou missed!" + ConsoleColors.RESET);
-                            fieldPlayer2.getField()[letterInt][num] = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
+                            System.out.println("\nYou missed!");
+                            fieldPlayer2.getField()[letterInt][num] = "M";
                         }
                         break;
 
@@ -118,7 +118,7 @@ class BattleshipGame {
 
             } else {
 
-                System.out.println(ConsoleColors.CYAN_BOLD + "Player 2, it's your turn:" + ConsoleColors.RESET);
+                System.out.println("Player 2, it's your turn:");
                 System.out.println();
                 enemyFieldViewForPlayer2.printField();
                 System.out.println("---------------------");
@@ -145,31 +145,31 @@ class BattleshipGame {
                         //inserting X or M into enemy (user) table
                         if (fieldPlayer1.isThereShip(letterInt, num) || fieldPlayer1.isThereHit(letterInt, num)) {
 
-                            enemyFieldViewForPlayer2.getField()[letterInt][num] = ConsoleColors.RED + "X" + ConsoleColors.RESET;
+                            enemyFieldViewForPlayer2.getField()[letterInt][num] = "X";
 
                         } else {
-                            enemyFieldViewForPlayer2.getField()[letterInt][num] = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
+                            enemyFieldViewForPlayer2.getField()[letterInt][num] = "M";
                         }
 
 
                         //inserting X or M into the table who inserted ships
                         if (fieldPlayer1.isThereShip(letterInt, num) || fieldPlayer1.isThereHit(letterInt, num)) {
-                            fieldPlayer1.getField()[letterInt][num] = ConsoleColors.RED + "X" + ConsoleColors.RESET;
+                            fieldPlayer1.getField()[letterInt][num] = "X";
                             if (fieldPlayer1.isShipSunken(letterInt, num)) {
                                 if (fieldPlayer1.getShipCordsSave().isEmpty()) {
-                                    System.out.println(ConsoleColors.GREEN_BOLD + "\nPlayer 2 sank the last ship. You won. Congratulations!\n" + ConsoleColors.RESET);
+                                    System.out.println("\nPlayer 2 sank the last ship. You won. Congratulations!\n");
                                     System.out.println("\nPress enter to exit the program...");
                                     scanner.nextLine();
                                     return;
                                 }
-                                System.out.println(ConsoleColors.GREEN_BOLD + "\nYou sank a ship!\n" + ConsoleColors.RESET);
+                                System.out.println("\nYou sank a ship!\n");
                             } else {
-                                System.out.println(ConsoleColors.GREEN_BOLD + "\nYou hit a ship!" + ConsoleColors.RESET);
+                                System.out.println("\nYou hit a ship!");
                             }
                             break;
                         } else {
-                            System.out.println(ConsoleColors.CYAN_BOLD + "\nYou missed!" + ConsoleColors.RESET);
-                            fieldPlayer1.getField()[letterInt][num] = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
+                            System.out.println("\nYou missed!");
+                            fieldPlayer1.getField()[letterInt][num] = "M";
                             break;
                         }
 

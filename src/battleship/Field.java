@@ -36,17 +36,17 @@ class Field {
     }
 
     public boolean isThereShip(int y, int x) {
-        String ship = ConsoleColors.GREEN_BOLD + "O" + ConsoleColors.RESET;
+        String ship = "O";
         return ship.contains(getField()[y][x]);
     }
 
     public boolean isThereHit(int y, int x) {
-        String hit = ConsoleColors.RED + "X" + ConsoleColors.RESET;
+        String hit = "X";
         return hit.contains(getField()[y][x]);
     }
 
     public boolean isThereMiss(int y, int x) {
-        String miss = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
+        String miss = "M";
         return miss.contains(getField()[y][x]);
     }
 
@@ -86,11 +86,11 @@ class Field {
 
     public void printField() {
         this.stringBuilder = new StringBuilder();
-        this.stringBuilder.append(ConsoleColors.RED +"  1 2 3 4 5 6 7 8 9 10\n" + ConsoleColors.RESET);
+        this.stringBuilder.append("  1 2 3 4 5 6 7 8 9 10\n");
         this.letters = 'A';
 
         for (int i = 0; i < getField().length; i++) {
-            stringBuilder.append(ConsoleColors.RED + letters + ConsoleColors.RESET).append(" ");
+            stringBuilder.append(letters).append(" ");
             letters++;
             for (int j = 0; j < getField()[i].length; j++) {
                 stringBuilder.append(getField()[i][j]).append(" ");
@@ -180,7 +180,7 @@ class Field {
                     try {
                         //insert
                         for (int i = minNum; i <= maxNum; i++) {
-                            getField()[getLetter1Int][i] = ConsoleColors.GREEN_BOLD + "O" + ConsoleColors.RESET;
+                            getField()[getLetter1Int][i] = "O";
                             coordinatesHolder.add(new Integer[]{getLetter1Int, i});
                             shipCordsSave.put(ship.getName(), coordinatesHolder);
                         }
@@ -214,7 +214,7 @@ class Field {
                     try {
                         //insert
                         for (int i = minLetterInt; i <= maxLetterInt; i++) {
-                            getField()[i][getNum1] = ConsoleColors.GREEN_BOLD + "O" + ConsoleColors.RESET;
+                            getField()[i][getNum1] = "O";
                             coordinatesHolder.add(new Integer[]{i, getNum1});
                             shipCordsSave.put(ship.getName(), coordinatesHolder);
                         }
