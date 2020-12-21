@@ -1,7 +1,6 @@
 # Battleship
 
-This is a simple implementation of battleship game in java.
-Program works in CLI (Command-Line Inteface)
+This is a simple implementation of battleship game in java. <br />Program works in CLI (Command-Line Inteface)
 Here is .exe file:
 
 -[Link](https://github.com/piotr-bujnowski/battleship/raw/master/exe/BattleshipWin10.exe) (win 10)
