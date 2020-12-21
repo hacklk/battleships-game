@@ -46,7 +46,7 @@ class BattleshipGame {
 
             promptEnterToAnotherTurn();
             clsScreen();
-            promptEnterAgain();
+            promptEnter();
             clsScreen();
 
 
@@ -191,7 +191,7 @@ class BattleshipGame {
         scanner.nextLine();
     }
 
-    public void promptEnterAgain() {
+    public void promptEnter() {
         System.out.println("Press Enter to continue...");
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
@@ -200,7 +200,7 @@ class BattleshipGame {
     public static void clsScreen() {
         try {
             if (System.getProperty("os.name").contains("Windows"))
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+                new ProcessBuilder("cmd.exe","/c", "cls").inheritIO().start().waitFor();
             else
                 Runtime.getRuntime().exec("clear");
 
