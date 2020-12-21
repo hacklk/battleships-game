@@ -25,12 +25,14 @@ class BattleshipGame {
         System.out.println();
         fieldPlayer1.shipInsertion(scanner);
 
-        promptEnterKey();
+        clsScreen();
+        promptEnterToAnotherTurn();
         clsScreen();
 
         System.out.println(ConsoleColors.CYAN_BOLD + "Player 2, place your ships to the game field\n" + ConsoleColors.RESET);
         fieldPlayer2.printField();
         fieldPlayer2.shipInsertion(scanner);
+
 
         Field enemyFieldViewForPlayer1 = new Field();
         Field enemyFieldViewForPlayer2 = new Field();
@@ -42,8 +44,11 @@ class BattleshipGame {
             int letterInt = 0;
             int num = 0;
 
-            promptEnterKey();
+            promptEnterToAnotherTurn();
             clsScreen();
+            promptEnterAgain();
+            clsScreen();
+
 
             if (whoseTurn % 2 == 0) {
 
@@ -64,7 +69,9 @@ class BattleshipGame {
                             continue;
                         }
 
-                        if (letterInt > 9) { throw new IndexOutOfBoundsException("Error: Please enter letters A-J"); }
+                        if (letterInt > 9) {
+                            throw new IndexOutOfBoundsException("Error: Please enter letters A-J");
+                        }
 
                         num = Integer.parseInt(shotInput.substring(1)) - 1;
                     } catch (Exception e) {
@@ -90,6 +97,8 @@ class BattleshipGame {
                             if (fieldPlayer2.isShipSunken(letterInt, num)) {
                                 if (fieldPlayer2.getShipCordsSave().isEmpty()) {
                                     System.out.println(ConsoleColors.GREEN_BOLD + "\nPlayer 1 sank the last ship. You won. Congratulations!" + ConsoleColors.RESET);
+                                    System.out.println("\nPress enter to exit the program...");
+                                    scanner.nextLine();
                                     return;
                                 }
                                 System.out.println(ConsoleColors.GREEN_BOLD + "\nYou sank a ship!\n" + ConsoleColors.RESET);
@@ -149,6 +158,8 @@ class BattleshipGame {
                             if (fieldPlayer1.isShipSunken(letterInt, num)) {
                                 if (fieldPlayer1.getShipCordsSave().isEmpty()) {
                                     System.out.println(ConsoleColors.GREEN_BOLD + "\nPlayer 2 sank the last ship. You won. Congratulations!\n" + ConsoleColors.RESET);
+                                    System.out.println("\nPress enter to exit the program...");
+                                    scanner.nextLine();
                                     return;
                                 }
                                 System.out.println(ConsoleColors.GREEN_BOLD + "\nYou sank a ship!\n" + ConsoleColors.RESET);
@@ -174,47 +185,30 @@ class BattleshipGame {
     }
 
 
-    public void promptEnterKey() {
+    public void promptEnterToAnotherTurn() {
         System.out.println("Press Enter and pass the move to another player");
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
     }
 
-
-    public static void cmdColorInit() {
-
-        try {
-
-            if (System.getProperty("os.name").contains("Windows"))
-
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-
-            else
-
-                Runtime.getRuntime().exec("clear");
-
-        } catch (IOException | InterruptedException ignored) {
-        }
+    public void promptEnterAgain() {
+        System.out.println("Press Enter to continue...");
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
     }
 
     public static void clsScreen() {
-
-        //Clears Screen
-
         try {
-
             if (System.getProperty("os.name").contains("Windows"))
-
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-
             else
-
                 Runtime.getRuntime().exec("clear");
 
         } catch (IOException | InterruptedException ignored) {
         }
 
     }
+
 }
 
 
