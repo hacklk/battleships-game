@@ -1,17 +1,17 @@
 package battleship;
 
-enum Ship {
+enum ShipType {
 
     CARRIER("Aircraft Carrier", 5),
     BATTLESHIP("Battleship", 4),
-    SUBMARINE("Submarine", 3),
     CRUISER("Cruiser", 3),
-    DESTROYER("Destroyer", 2);
+    DESTROYER("Destroyer", 2),
+    SUBMARINE("Submarine", 1);
 
     private final String name;
     private final int length;
 
-    Ship(String name, int length) {
+    ShipType(String name, int length) {
         this.name = name;
         this.length = length;
     }

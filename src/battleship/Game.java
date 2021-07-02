@@ -3,15 +3,15 @@ package battleship;
 import java.io.IOException;
 import java.util.Scanner;
 
-class BattleshipGame {
+class Game {
 
-    private Field fieldPlayer1;
-    private Field fieldPlayer2;
+    private Square squarePlayer1;
+    private Square squarePlayer2;
     private Scanner scanner;
 
-    public BattleshipGame(Field fieldPlayer1, Field fieldPlayer2, Scanner scanner) {
-        this.fieldPlayer1 = fieldPlayer1;
-        this.fieldPlayer2 = fieldPlayer2;
+    public Game(Square squarePlayer1, Square squarePlayer2, Scanner scanner) {
+        this.squarePlayer1 = squarePlayer1;
+        this.squarePlayer2 = squarePlayer2;
         this.scanner = scanner;
     }
 
@@ -21,21 +21,21 @@ class BattleshipGame {
         System.out.println("Enter \"?\" or \"help\" if you don't know how to enter coordinates.\n" + ConsoleColors.RESET);
 
         System.out.println(ConsoleColors.GREEN_BOLD + "Player 1, place your ships on the game field\n" + ConsoleColors.RESET);
-        fieldPlayer1.printField();
+        squarePlayer1.display();
         System.out.println();
-        fieldPlayer1.shipInsertion(scanner);
+        squarePlayer1.board(scanner);
 
         clsScreen();
         promptEnterToAnotherTurn();
         clsScreen();
 
         System.out.println(ConsoleColors.CYAN_BOLD + "Player 2, place your ships to the game field\n" + ConsoleColors.RESET);
-        fieldPlayer2.printField();
-        fieldPlayer2.shipInsertion(scanner);
+        squarePlayer2.display();
+        squarePlayer2.board(scanner);
 
 
-        Field enemyFieldViewForPlayer1 = new Field();
-        Field enemyFieldViewForPlayer2 = new Field();
+        Square enemySquareViewForPlayer1 = new Square();
+        Square enemySquareViewForPlayer2 = new Square();
 
         int whoseTurn = 0;
 
@@ -54,17 +54,17 @@ class BattleshipGame {
 
                 System.out.println(ConsoleColors.GREEN_BOLD + "Player 1, it's your turn:" + ConsoleColors.RESET);
                 System.out.println();
-                enemyFieldViewForPlayer1.printField();
+                enemySquareViewForPlayer1.display();
                 System.out.println("---------------------");
-                fieldPlayer1.printField();
+                squarePlayer1.display();
 
 
                 while (true) {
                     System.out.print("\n> ");
                     String shotInput = scanner.nextLine().toUpperCase();
                     try {
-                        if (fieldPlayer1.getLetterBind().get(shotInput.charAt(0)) != null) {
-                            letterInt = fieldPlayer1.getLetterBind().get(shotInput.charAt(0)) - 1;
+                        if (squarePlayer1.getLetterBind().get(shotInput.charAt(0)) != null) {
+                            letterInt = squarePlayer1.getLetterBind().get(shotInput.charAt(0)) - 1;
                         } else {
                             continue;
                         }
@@ -82,20 +82,20 @@ class BattleshipGame {
 
                     try {
                         //inserting X or M into enemy (user) table
-                        if (fieldPlayer2.isThereShip(letterInt, num) || fieldPlayer2.isThereHit(letterInt, num)) {
+                        if (squarePlayer2.isThereShip(letterInt, num) || squarePlayer2.isThereHit(letterInt, num)) {
 
-                            enemyFieldViewForPlayer1.getField()[letterInt][num] = ConsoleColors.RED + "X" + ConsoleColors.RESET;
+                            enemySquareViewForPlayer1.getField()[letterInt][num] = ConsoleColors.RED + "X" + ConsoleColors.RESET;
 
                         } else {
-                            enemyFieldViewForPlayer1.getField()[letterInt][num] = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
+                            enemySquareViewForPlayer1.getField()[letterInt][num] = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
                         }
 
 
                         //inserting X or M into the table who inserted ships
-                        if (fieldPlayer2.isThereShip(letterInt, num) || fieldPlayer2.isThereHit(letterInt, num)) {
-                            fieldPlayer2.getField()[letterInt][num] = ConsoleColors.RED + "X" + ConsoleColors.RESET;
-                            if (fieldPlayer2.isShipSunken(letterInt, num)) {
-                                if (fieldPlayer2.getShipCordsSave().isEmpty()) {
+                        if (squarePlayer2.isThereShip(letterInt, num) || squarePlayer2.isThereHit(letterInt, num)) {
+                            squarePlayer2.getField()[letterInt][num] = ConsoleColors.RED + "X" + ConsoleColors.RESET;
+                            if (squarePlayer2.player(letterInt, num)) {
+                                if (squarePlayer2.getShipCordsSave().isEmpty()) {
                                     System.out.println(ConsoleColors.GREEN_BOLD + "\nPlayer 1 sank the last ship. You won. Congratulations!" + ConsoleColors.RESET);
                                     System.out.println("\nPress enter to exit the program...");
                                     scanner.nextLine();
@@ -107,7 +107,7 @@ class BattleshipGame {
                             }
                         } else {
                             System.out.println(ConsoleColors.CYAN_BOLD + "\nYou missed!" + ConsoleColors.RESET);
-                            fieldPlayer2.getField()[letterInt][num] = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
+                            squarePlayer2.getField()[letterInt][num] = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
                         }
                         break;
 
@@ -120,16 +120,16 @@ class BattleshipGame {
 
                 System.out.println(ConsoleColors.CYAN_BOLD + "Player 2, it's your turn:" + ConsoleColors.RESET);
                 System.out.println();
-                enemyFieldViewForPlayer2.printField();
+                enemySquareViewForPlayer2.display();
                 System.out.println("---------------------");
-                fieldPlayer2.printField();
+                squarePlayer2.display();
 
                 while (true) {
                     System.out.print("\n> ");
                     String shotInput = scanner.nextLine().toUpperCase();
                     try {
-                        if (fieldPlayer2.getLetterBind().get(shotInput.charAt(0)) != null) {
-                            letterInt = fieldPlayer2.getLetterBind().get(shotInput.charAt(0)) - 1;
+                        if (squarePlayer2.getLetterBind().get(shotInput.charAt(0)) != null) {
+                            letterInt = squarePlayer2.getLetterBind().get(shotInput.charAt(0)) - 1;
                         } else {
                             continue;
                         }
@@ -143,20 +143,20 @@ class BattleshipGame {
 
                     try {
                         //inserting X or M into enemy (user) table
-                        if (fieldPlayer1.isThereShip(letterInt, num) || fieldPlayer1.isThereHit(letterInt, num)) {
+                        if (squarePlayer1.isThereShip(letterInt, num) || squarePlayer1.isThereHit(letterInt, num)) {
 
-                            enemyFieldViewForPlayer2.getField()[letterInt][num] = ConsoleColors.RED + "X" + ConsoleColors.RESET;
+                            enemySquareViewForPlayer2.getField()[letterInt][num] = ConsoleColors.RED + "X" + ConsoleColors.RESET;
 
                         } else {
-                            enemyFieldViewForPlayer2.getField()[letterInt][num] = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
+                            enemySquareViewForPlayer2.getField()[letterInt][num] = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
                         }
 
 
                         //inserting X or M into the table who inserted ships
-                        if (fieldPlayer1.isThereShip(letterInt, num) || fieldPlayer1.isThereHit(letterInt, num)) {
-                            fieldPlayer1.getField()[letterInt][num] = ConsoleColors.RED + "X" + ConsoleColors.RESET;
-                            if (fieldPlayer1.isShipSunken(letterInt, num)) {
-                                if (fieldPlayer1.getShipCordsSave().isEmpty()) {
+                        if (squarePlayer1.isThereShip(letterInt, num) || squarePlayer1.isThereHit(letterInt, num)) {
+                            squarePlayer1.getField()[letterInt][num] = ConsoleColors.RED + "X" + ConsoleColors.RESET;
+                            if (squarePlayer1.player(letterInt, num)) {
+                                if (squarePlayer1.getShipCordsSave().isEmpty()) {
                                     System.out.println(ConsoleColors.GREEN_BOLD + "\nPlayer 2 sank the last ship. You won. Congratulations!\n" + ConsoleColors.RESET);
                                     System.out.println("\nPress enter to exit the program...");
                                     scanner.nextLine();
@@ -169,7 +169,7 @@ class BattleshipGame {
                             break;
                         } else {
                             System.out.println(ConsoleColors.CYAN_BOLD + "\nYou missed!" + ConsoleColors.RESET);
-                            fieldPlayer1.getField()[letterInt][num] = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
+                            squarePlayer1.getField()[letterInt][num] = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
                             break;
                         }
 
