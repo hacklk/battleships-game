@@ -17,10 +17,10 @@ class Game {
 
     public void play() {
         clsScreen();
-        System.out.println(ConsoleColors.RESET + "\nFor game rules and description info enter \"rules\".");
-        System.out.println("Enter \"?\" or \"help\" if you don't know how to enter coordinates.\n" + ConsoleColors.RESET);
+        System.out.println(Square.ConsoleColors.RESET + "\nFor game rules and description info enter \"rules\".");
+        System.out.println("Enter \"?\" or \"help\" if you don't know how to enter coordinates.\n" + Square.ConsoleColors.RESET);
 
-        System.out.println(ConsoleColors.RESET + "Player 1, place your ships on the game field\n" + ConsoleColors.RESET);
+        System.out.println(Square.ConsoleColors.RESET + "Player 1, place your ships on the game field\n" + Square.ConsoleColors.RESET);
         squarePlayer1.display();
         System.out.println();
         squarePlayer1.board(scanner);
@@ -29,7 +29,7 @@ class Game {
         promptEnterToAnotherTurn();
         clsScreen();
 
-        System.out.println(ConsoleColors.RESET + "Player 2, place your ships to the game field\n" + ConsoleColors.RESET);
+        System.out.println(Square.ConsoleColors.RESET + "Player 2, place your ships to the game field\n" + Square.ConsoleColors.RESET);
         squarePlayer2.display();
         squarePlayer2.board(scanner);
 
@@ -52,7 +52,7 @@ class Game {
 
             if (whoseTurn % 2 == 0) {
 
-                System.out.println(ConsoleColors.RESET + "Player 1, it's your turn:" + ConsoleColors.RESET);
+                System.out.println(Square.ConsoleColors.RESET + "Player 1, it's your turn:" + Square.ConsoleColors.RESET);
                 System.out.println();
                 enemySquareViewForPlayer1.display();
                 System.out.println("---------------------");
@@ -84,30 +84,30 @@ class Game {
                         //inserting X or M into enemy (user) table
                         if (squarePlayer2.isThereShip(letterInt, num) || squarePlayer2.isThereHit(letterInt, num)) {
 
-                            enemySquareViewForPlayer1.getField()[letterInt][num] = ConsoleColors.RED + "X" + ConsoleColors.RESET;
+                            enemySquareViewForPlayer1.getField()[letterInt][num] = Square.ConsoleColors.RED + "X" + Square.ConsoleColors.RESET;
 
                         } else {
-                            enemySquareViewForPlayer1.getField()[letterInt][num] = ConsoleColors.RESET + "M" + ConsoleColors.RESET;
+                            enemySquareViewForPlayer1.getField()[letterInt][num] = Square.ConsoleColors.RESET + "M" + Square.ConsoleColors.RESET;
                         }
 
 
                         //inserting X or M into the table who inserted ships
                         if (squarePlayer2.isThereShip(letterInt, num) || squarePlayer2.isThereHit(letterInt, num)) {
-                            squarePlayer2.getField()[letterInt][num] = ConsoleColors.RED + "X" + ConsoleColors.RESET;
+                            squarePlayer2.getField()[letterInt][num] = Square.ConsoleColors.RED + "X" + Square.ConsoleColors.RESET;
                             if (squarePlayer2.player(letterInt, num)) {
                                 if (squarePlayer2.getShipCordsSave().isEmpty()) {
-                                    System.out.println(ConsoleColors.RESET + "\nPlayer 1 sank the last ship. You won. Congratulations!" + ConsoleColors.RESET);
+                                    System.out.println(Square.ConsoleColors.RESET + "\nPlayer 1 sank the last ship. You won. Congratulations!" + Square.ConsoleColors.RESET);
                                     System.out.println("\nPress enter to exit the program...");
                                     scanner.nextLine();
                                     return;
                                 }
-                                System.out.println(ConsoleColors.RESET + "\nYou sank a ship!\n" + ConsoleColors.RESET);
+                                System.out.println(Square.ConsoleColors.RESET + "\nYou sank a ship!\n" + Square.ConsoleColors.RESET);
                             } else {
-                                System.out.println(ConsoleColors.RESET + "\nYou hit a ship!" + ConsoleColors.RESET);
+                                System.out.println(Square.ConsoleColors.RESET + "\nYou hit a ship!" + Square.ConsoleColors.RESET);
                             }
                         } else {
-                            System.out.println(ConsoleColors.RESET + "\nYou missed!" + ConsoleColors.RESET);
-                            squarePlayer2.getField()[letterInt][num] = ConsoleColors.RESET + "M" + ConsoleColors.RESET;
+                            System.out.println(Square.ConsoleColors.RESET + "\nYou missed!" + Square.ConsoleColors.RESET);
+                            squarePlayer2.getField()[letterInt][num] = Square.ConsoleColors.RESET + "M" + Square.ConsoleColors.RESET;
                         }
                         break;
 
@@ -118,7 +118,7 @@ class Game {
 
             } else {
 
-                System.out.println(ConsoleColors.RESET + "Player 2, it's your turn:" + ConsoleColors.RESET);
+                System.out.println(Square.ConsoleColors.RESET + "Player 2, it's your turn:" + Square.ConsoleColors.RESET);
                 System.out.println();
                 enemySquareViewForPlayer2.display();
                 System.out.println("---------------------");
@@ -145,31 +145,31 @@ class Game {
                         //inserting X or M into enemy (user) table
                         if (squarePlayer1.isThereShip(letterInt, num) || squarePlayer1.isThereHit(letterInt, num)) {
 
-                            enemySquareViewForPlayer2.getField()[letterInt][num] = ConsoleColors.RED + "X" + ConsoleColors.RESET;
+                            enemySquareViewForPlayer2.getField()[letterInt][num] = Square.ConsoleColors.RED + "X" + Square.ConsoleColors.RESET;
 
                         } else {
-                            enemySquareViewForPlayer2.getField()[letterInt][num] = ConsoleColors.RESET + "M" + ConsoleColors.RESET;
+                            enemySquareViewForPlayer2.getField()[letterInt][num] = Square.ConsoleColors.RESET + "M" + Square.ConsoleColors.RESET;
                         }
 
 
                         //inserting X or M into the table who inserted ships
                         if (squarePlayer1.isThereShip(letterInt, num) || squarePlayer1.isThereHit(letterInt, num)) {
-                            squarePlayer1.getField()[letterInt][num] = ConsoleColors.RED + "X" + ConsoleColors.RESET;
+                            squarePlayer1.getField()[letterInt][num] = Square.ConsoleColors.RED + "X" + Square.ConsoleColors.RESET;
                             if (squarePlayer1.player(letterInt, num)) {
                                 if (squarePlayer1.getShipCordsSave().isEmpty()) {
-                                    System.out.println(ConsoleColors.RESET + "\nPlayer 2 sank the last ship. You won. Congratulations!\n" + ConsoleColors.RESET);
+                                    System.out.println(Square.ConsoleColors.RESET + "\nPlayer 2 sank the last ship. You won. Congratulations!\n" + Square.ConsoleColors.RESET);
                                     System.out.println("\nPress enter to exit the program...");
                                     scanner.nextLine();
                                     return;
                                 }
-                                System.out.println(ConsoleColors.RESET + "\nYou sank a ship!\n" + ConsoleColors.RESET);
+                                System.out.println(Square.ConsoleColors.RESET + "\nYou sank a ship!\n" + Square.ConsoleColors.RESET);
                             } else {
-                                System.out.println(ConsoleColors.RESET + "\nYou hit a ship!" + ConsoleColors.RESET);
+                                System.out.println(Square.ConsoleColors.RESET + "\nYou hit a ship!" + Square.ConsoleColors.RESET);
                             }
                             break;
                         } else {
-                            System.out.println(ConsoleColors.RESET + "\nYou missed!" + ConsoleColors.RESET);
-                            squarePlayer1.getField()[letterInt][num] = ConsoleColors.RESET + "M" + ConsoleColors.RESET;
+                            System.out.println(Square.ConsoleColors.RESET + "\nYou missed!" + Square.ConsoleColors.RESET);
+                            squarePlayer1.getField()[letterInt][num] = Square.ConsoleColors.RESET + "M" + Square.ConsoleColors.RESET;
                             break;
                         }
 

@@ -89,7 +89,7 @@ public class BoardFactory {
                     try {
                         //insert
                         for (int i = minNum; i <= maxNum; i++) {
-                            square.getField()[getLetter1Int][i] = ConsoleColors.RESET + "O" + ConsoleColors.RESET;
+                            square.getField()[getLetter1Int][i] = Square.ConsoleColors.RESET + "O" + Square.ConsoleColors.RESET;
                             coordinatesHolder.add(new Integer[]{getLetter1Int, i});
                             square.getShipCordsSave().put(shipType.getName(), coordinatesHolder);
                         }
@@ -123,7 +123,7 @@ public class BoardFactory {
                     try {
                         //insert
                         for (int i = minLetterInt; i <= maxLetterInt; i++) {
-                            square.getField()[i][getNum1] = ConsoleColors.RESET + "O" + ConsoleColors.RESET;
+                            square.getField()[i][getNum1] = Square.ConsoleColors.RESET + "O" + Square.ConsoleColors.RESET;
                             coordinatesHolder.add(new Integer[]{i, getNum1});
                             square.getShipCordsSave().put(shipType.getName(), coordinatesHolder);
                         }
