@@ -38,7 +38,7 @@ class Square {
     }
 
     public boolean isThereShip(int y, int x) {
-        String ship = ConsoleColors.GREEN_BOLD + "O" + ConsoleColors.RESET;
+        String ship = ConsoleColors.RESET + "O" + ConsoleColors.RESET;
         return ship.contains(getField()[y][x]);
     }
 
@@ -48,7 +48,7 @@ class Square {
     }
 
     public boolean isThereMiss(int y, int x) {
-        String miss = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
+        String miss = ConsoleColors.RESET + "M" + ConsoleColors.RESET;
         return miss.contains(getField()[y][x]);
     }
 

@@ -17,10 +17,10 @@ class Game {
 
     public void play() {
         clsScreen();
-        System.out.println(ConsoleColors.CYAN_BOLD + "\nFor game rules and description info enter \"rules\".");
+        System.out.println(ConsoleColors.RESET + "\nFor game rules and description info enter \"rules\".");
         System.out.println("Enter \"?\" or \"help\" if you don't know how to enter coordinates.\n" + ConsoleColors.RESET);
 
-        System.out.println(ConsoleColors.GREEN_BOLD + "Player 1, place your ships on the game field\n" + ConsoleColors.RESET);
+        System.out.println(ConsoleColors.RESET + "Player 1, place your ships on the game field\n" + ConsoleColors.RESET);
         squarePlayer1.display();
         System.out.println();
         squarePlayer1.board(scanner);
@@ -29,7 +29,7 @@ class Game {
         promptEnterToAnotherTurn();
         clsScreen();
 
-        System.out.println(ConsoleColors.CYAN_BOLD + "Player 2, place your ships to the game field\n" + ConsoleColors.RESET);
+        System.out.println(ConsoleColors.RESET + "Player 2, place your ships to the game field\n" + ConsoleColors.RESET);
         squarePlayer2.display();
         squarePlayer2.board(scanner);
 
@@ -52,7 +52,7 @@ class Game {
 
             if (whoseTurn % 2 == 0) {
 
-                System.out.println(ConsoleColors.GREEN_BOLD + "Player 1, it's your turn:" + ConsoleColors.RESET);
+                System.out.println(ConsoleColors.RESET + "Player 1, it's your turn:" + ConsoleColors.RESET);
                 System.out.println();
                 enemySquareViewForPlayer1.display();
                 System.out.println("---------------------");
@@ -87,7 +87,7 @@ class Game {
                             enemySquareViewForPlayer1.getField()[letterInt][num] = ConsoleColors.RED + "X" + ConsoleColors.RESET;
 
                         } else {
-                            enemySquareViewForPlayer1.getField()[letterInt][num] = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
+                            enemySquareViewForPlayer1.getField()[letterInt][num] = ConsoleColors.RESET + "M" + ConsoleColors.RESET;
                         }
 
 
@@ -96,18 +96,18 @@ class Game {
                             squarePlayer2.getField()[letterInt][num] = ConsoleColors.RED + "X" + ConsoleColors.RESET;
                             if (squarePlayer2.player(letterInt, num)) {
                                 if (squarePlayer2.getShipCordsSave().isEmpty()) {
-                                    System.out.println(ConsoleColors.GREEN_BOLD + "\nPlayer 1 sank the last ship. You won. Congratulations!" + ConsoleColors.RESET);
+                                    System.out.println(ConsoleColors.RESET + "\nPlayer 1 sank the last ship. You won. Congratulations!" + ConsoleColors.RESET);
                                     System.out.println("\nPress enter to exit the program...");
                                     scanner.nextLine();
                                     return;
                                 }
-                                System.out.println(ConsoleColors.GREEN_BOLD + "\nYou sank a ship!\n" + ConsoleColors.RESET);
+                                System.out.println(ConsoleColors.RESET + "\nYou sank a ship!\n" + ConsoleColors.RESET);
                             } else {
-                                System.out.println(ConsoleColors.GREEN_BOLD + "\nYou hit a ship!" + ConsoleColors.RESET);
+                                System.out.println(ConsoleColors.RESET + "\nYou hit a ship!" + ConsoleColors.RESET);
                             }
                         } else {
-                            System.out.println(ConsoleColors.CYAN_BOLD + "\nYou missed!" + ConsoleColors.RESET);
-                            squarePlayer2.getField()[letterInt][num] = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
+                            System.out.println(ConsoleColors.RESET + "\nYou missed!" + ConsoleColors.RESET);
+                            squarePlayer2.getField()[letterInt][num] = ConsoleColors.RESET + "M" + ConsoleColors.RESET;
                         }
                         break;
 
@@ -118,7 +118,7 @@ class Game {
 
             } else {
 
-                System.out.println(ConsoleColors.CYAN_BOLD + "Player 2, it's your turn:" + ConsoleColors.RESET);
+                System.out.println(ConsoleColors.RESET + "Player 2, it's your turn:" + ConsoleColors.RESET);
                 System.out.println();
                 enemySquareViewForPlayer2.display();
                 System.out.println("---------------------");
@@ -148,7 +148,7 @@ class Game {
                             enemySquareViewForPlayer2.getField()[letterInt][num] = ConsoleColors.RED + "X" + ConsoleColors.RESET;
 
                         } else {
-                            enemySquareViewForPlayer2.getField()[letterInt][num] = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
+                            enemySquareViewForPlayer2.getField()[letterInt][num] = ConsoleColors.RESET + "M" + ConsoleColors.RESET;
                         }
 
 
@@ -157,19 +157,19 @@ class Game {
                             squarePlayer1.getField()[letterInt][num] = ConsoleColors.RED + "X" + ConsoleColors.RESET;
                             if (squarePlayer1.player(letterInt, num)) {
                                 if (squarePlayer1.getShipCordsSave().isEmpty()) {
-                                    System.out.println(ConsoleColors.GREEN_BOLD + "\nPlayer 2 sank the last ship. You won. Congratulations!\n" + ConsoleColors.RESET);
+                                    System.out.println(ConsoleColors.RESET + "\nPlayer 2 sank the last ship. You won. Congratulations!\n" + ConsoleColors.RESET);
                                     System.out.println("\nPress enter to exit the program...");
                                     scanner.nextLine();
                                     return;
                                 }
-                                System.out.println(ConsoleColors.GREEN_BOLD + "\nYou sank a ship!\n" + ConsoleColors.RESET);
+                                System.out.println(ConsoleColors.RESET + "\nYou sank a ship!\n" + ConsoleColors.RESET);
                             } else {
-                                System.out.println(ConsoleColors.GREEN_BOLD + "\nYou hit a ship!" + ConsoleColors.RESET);
+                                System.out.println(ConsoleColors.RESET + "\nYou hit a ship!" + ConsoleColors.RESET);
                             }
                             break;
                         } else {
-                            System.out.println(ConsoleColors.CYAN_BOLD + "\nYou missed!" + ConsoleColors.RESET);
-                            squarePlayer1.getField()[letterInt][num] = ConsoleColors.CYAN_BOLD + "M" + ConsoleColors.RESET;
+                            System.out.println(ConsoleColors.RESET + "\nYou missed!" + ConsoleColors.RESET);
+                            squarePlayer1.getField()[letterInt][num] = ConsoleColors.RESET + "M" + ConsoleColors.RESET;
                             break;
                         }
 
